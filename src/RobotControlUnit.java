@@ -9,6 +9,7 @@ import com.rea.robot.io.ConsoleIO;
  */
 public class RobotControlUnit {
     public static void main(String[] args) {
+        ConsoleIO.getInstance().write("Gird size: " + AppConstants.tableCols + "x" + AppConstants.tableRows);
         /*initialize a table and a robot*/
         Table table = new Table(AppConstants.tableRows, AppConstants.tableCols);
         Robot robot = new Robot(table);

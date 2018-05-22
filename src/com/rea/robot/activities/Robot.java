@@ -25,9 +25,13 @@ public class Robot {
      * @param direction direction which the robot is facing
      */
     public void place(int row, int col, Directions direction) {
-        this.currentRow = AppConstants.tableRows - 1 - row; // align the indexing of given coordinate system in the problem description and indexing of java 2D int array
-        this.currentCol = col;
-        this.currentDirection = direction;
+        if (isOnTable(row, col)) {
+            this.currentRow = AppConstants.tableRows - 1 - row; // align the indexing of given coordinate system in the problem description and indexing of java 2D int array
+            this.currentCol = col;
+            this.currentDirection = direction;
+        } else {
+            ConsoleIO.getInstance().write("Ignoring command! Invalid place. Out of the table!");
+        }
     }
 
     /**
