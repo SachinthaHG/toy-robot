@@ -2,6 +2,7 @@ package com.rea.robot.activities;
 
 import com.rea.robot.configs.AppConstants;
 import com.rea.robot.configs.Directions;
+import com.rea.robot.io.ConsoleIO;
 
 /**
  * This class simulates the Robot
@@ -37,21 +38,29 @@ public class Robot {
             case NORTH:
                 if (isOnTable(currentRow - 1, currentCol)) {
                     currentRow--;
+                } else {
+                    ConsoleIO.getInstance().write("Ignoring command! Invalid movement. Out of the table!");
                 }
                 break;
             case EAST:
                 if (isOnTable(currentRow, currentCol + 1)) {
                     currentCol++;
+                } else {
+                    ConsoleIO.getInstance().write("Ignoring command! Invalid movement. Out of the table!");
                 }
                 break;
             case SOUTH:
                 if (isOnTable(currentRow + 1, currentCol)) {
                     currentRow++;
+                } else {
+                    ConsoleIO.getInstance().write("Ignoring command! Invalid movement. Out of the table!");
                 }
                 break;
             case WEST:
                 if (isOnTable(currentRow, currentCol - 1)) {
                     currentCol--;
+                } else {
+                    ConsoleIO.getInstance().write("Ignoring command! Invalid movement. Out of the table!");
                 }
                 break;
             default:
