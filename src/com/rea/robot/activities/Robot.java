@@ -134,4 +134,31 @@ public class Robot {
             return true;
         }
     }
+
+    /**
+     * This method is to get the y coordinate of the robot
+     *
+     * @return y coordinate of the robot
+     */
+    public int getCurrentRow() {
+        return AppConstants.tableRows - 1 - currentRow;
+    }
+
+    /**
+     * This method is to get the x coordinate of the robot
+     *
+     * @return x coordinate of the robot
+     */
+    public int getCurrentCol() {
+        return currentCol;
+    }
+
+    /**
+     * This  method is to get the current direction of the robot
+     *
+     * @return current direction of the robot
+     */
+    public Directions getCurrentDirection() {
+        return currentDirection;
+    }
 }
