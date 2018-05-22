@@ -7,8 +7,8 @@ import com.rea.robot.configs.Directions;
  * This class simulates the Robot
  */
 public class Robot {
-    private int currentX;
-    private int currentY;
+    private int currentRow;
+    private int currentCol;
     private Directions currentDirection;
     private int[][] table;
 
@@ -19,13 +19,13 @@ public class Robot {
     /**
      * This method place the robot on specified position on the table
      *
-     * @param x         x coordinate
-     * @param y         y coordinate
+     * @param row       x coordinate
+     * @param col       y coordinate
      * @param direction direction which the robot is facing
      */
-    public void place(int x, int y, Directions direction) {
-        this.currentX = x;
-        this.currentY = y;
+    public void place(int row, int col, Directions direction) {
+        this.currentRow = AppConstants.tableRows - 1 - row;
+        this.currentCol = col;
         this.currentDirection = direction;
     }
 
@@ -35,23 +35,27 @@ public class Robot {
     public void move() {
         switch (currentDirection) {
             case NORTH:
-                if (isOnTable(currentX, currentY + 1)) {
-                    currentY++;
+                if (isOnTable(currentRow - 1, currentCol)) {
+                    currentRow--;
                 }
+                break;
             case EAST:
-                if (isOnTable(currentX + 1, currentY)) {
-                    currentX++;
+                if (isOnTable(currentRow, currentCol + 1)) {
+                    currentCol++;
                 }
+                break;
             case SOUTH:
-                if (isOnTable(currentX, currentY - 1)) {
-                    currentY--;
+                if (isOnTable(currentRow + 1, currentCol)) {
+                    currentRow++;
                 }
+                break;
             case WEST:
-                if (isOnTable(currentX - 1, currentY)) {
-                    currentX--;
+                if (isOnTable(currentRow, currentCol - 1)) {
+                    currentCol--;
                 }
+                break;
             default:
-                return;
+                break;
         }
     }
 
@@ -62,14 +66,18 @@ public class Robot {
         switch (currentDirection) {
             case NORTH:
                 currentDirection = Directions.WEST;
+                break;
             case EAST:
                 currentDirection = Directions.NORTH;
+                break;
             case SOUTH:
                 currentDirection = Directions.EAST;
+                break;
             case WEST:
                 currentDirection = Directions.SOUTH;
+                break;
             default:
-                return;
+                break;
         }
     }
 
@@ -80,14 +88,18 @@ public class Robot {
         switch (currentDirection) {
             case NORTH:
                 currentDirection = Directions.EAST;
+                break;
             case EAST:
                 currentDirection = Directions.SOUTH;
+                break;
             case SOUTH:
                 currentDirection = Directions.WEST;
+                break;
             case WEST:
                 currentDirection = Directions.NORTH;
+                break;
             default:
-                return;
+                break;
         }
     }
 
@@ -98,16 +110,16 @@ public class Robot {
      */
     public String report() {
         StringBuilder stringBuilder = new StringBuilder();
-        return stringBuilder.append(currentX).append(", ").append(currentY).append(", ").append(currentDirection).toString();
+        return stringBuilder.append(currentCol).append(", ").append(AppConstants.tableRows - 1 - currentRow).append(", ").append(currentDirection).toString();
     }
 
     /**
-     * @param x x coordinate
-     * @param y y coordinate
+     * @param row x coordinate
+     * @param col y coordinate
      * @return boolean value that the given position is on the table or not
      */
-    private boolean isOnTable(int x, int y) {
-        if (x < 0 || y < 0 || x >= AppConstants.tableRows || y >= AppConstants.tableCols) {
+    private boolean isOnTable(int row, int col) {
+        if (row < 0 || col < 0 || row >= AppConstants.tableRows || col >= AppConstants.tableCols) {
             return false;
         } else {
             return true;
