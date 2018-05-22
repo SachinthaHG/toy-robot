@@ -20,12 +20,12 @@ public class Robot {
     /**
      * This method place the robot on specified position on the table
      *
-     * @param row       x coordinate
-     * @param col       y coordinate
+     * @param row       y coordinate
+     * @param col       x coordinate
      * @param direction direction which the robot is facing
      */
     public void place(int row, int col, Directions direction) {
-        this.currentRow = AppConstants.tableRows - 1 - row;
+        this.currentRow = AppConstants.tableRows - 1 - row; // align the indexing of given coordinate system in the problem description and indexing of java 2D int array
         this.currentCol = col;
         this.currentDirection = direction;
     }
@@ -123,8 +123,8 @@ public class Robot {
     }
 
     /**
-     * @param row x coordinate
-     * @param col y coordinate
+     * @param row y coordinate
+     * @param col x coordinate
      * @return boolean value that the given position is on the table or not
      */
     private boolean isOnTable(int row, int col) {

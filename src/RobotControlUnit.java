@@ -4,14 +4,19 @@ import com.rea.robot.configs.AppConstants;
 import com.rea.robot.configs.Directions;
 import com.rea.robot.io.ConsoleIO;
 
+/**
+ * This class act as the Control unit of the Robot
+ */
 public class RobotControlUnit {
     public static void main(String[] args) {
+        /*initialize a table and a robot*/
         Table table = new Table(AppConstants.tableRows, AppConstants.tableCols);
         Robot robot = new Robot(table);
 
         String input = ConsoleIO.getInstance().read();
         String[] processedInput = input.split(" ");
 
+        /*Exit the application if the command is EXIT*/
         while (!processedInput[0].trim().equals("EXIT")) {
             switch (processedInput[0].trim()) {
                 case "PLACE":
