@@ -12,6 +12,7 @@ public class Robot {
     private int currentCol;
     private Directions currentDirection;
     private int[][] table;
+    private boolean placedOnTable = false; // to check if the robot is placed on the table
 
     public Robot(Table table) {
         this.table = table.getTable();
@@ -29,6 +30,7 @@ public class Robot {
             this.currentRow = AppConstants.tableRows - 1 - row; // align the indexing of given coordinate system in the problem description and indexing of java 2D int array
             this.currentCol = col;
             this.currentDirection = direction;
+            placedOnTable = true;
         } else {
             ConsoleIO.getInstance().write("Ignoring command! Invalid place. Out of the table!");
         }
@@ -38,81 +40,95 @@ public class Robot {
      * This method move the robot by one unit towards the direction which the robot is facing
      */
     public void move() {
-        switch (currentDirection) {
-            case NORTH:
-                if (isOnTable(currentRow - 1, currentCol)) {
-                    currentRow--;
-                } else {
-                    ConsoleIO.getInstance().write("Ignoring command! Invalid movement. Out of the table!");
-                }
-                break;
-            case EAST:
-                if (isOnTable(currentRow, currentCol + 1)) {
-                    currentCol++;
-                } else {
-                    ConsoleIO.getInstance().write("Ignoring command! Invalid movement. Out of the table!");
-                }
-                break;
-            case SOUTH:
-                if (isOnTable(currentRow + 1, currentCol)) {
-                    currentRow++;
-                } else {
-                    ConsoleIO.getInstance().write("Ignoring command! Invalid movement. Out of the table!");
-                }
-                break;
-            case WEST:
-                if (isOnTable(currentRow, currentCol - 1)) {
-                    currentCol--;
-                } else {
-                    ConsoleIO.getInstance().write("Ignoring command! Invalid movement. Out of the table!");
-                }
-                break;
-            default:
-                break;
+        if (placedOnTable) {
+            switch (currentDirection) {
+                case NORTH:
+                    if (isOnTable(currentRow - 1, currentCol)) {
+                        currentRow--;
+                    } else {
+                        ConsoleIO.getInstance().write("Ignoring command! Invalid movement. Out of the table!");
+                    }
+                    break;
+                case EAST:
+                    if (isOnTable(currentRow, currentCol + 1)) {
+                        currentCol++;
+                    } else {
+                        ConsoleIO.getInstance().write("Ignoring command! Invalid movement. Out of the table!");
+                    }
+                    break;
+                case SOUTH:
+                    if (isOnTable(currentRow + 1, currentCol)) {
+                        currentRow++;
+                    } else {
+                        ConsoleIO.getInstance().write("Ignoring command! Invalid movement. Out of the table!");
+                    }
+                    break;
+                case WEST:
+                    if (isOnTable(currentRow, currentCol - 1)) {
+                        currentCol--;
+                    } else {
+                        ConsoleIO.getInstance().write("Ignoring command! Invalid movement. Out of the table!");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            ConsoleIO.getInstance().write("Ignoring command! Place the robot on the table before move!");
         }
+
     }
 
     /**
      * This method turn the robot to left
      */
     public void left() {
-        switch (currentDirection) {
-            case NORTH:
-                currentDirection = Directions.WEST;
-                break;
-            case EAST:
-                currentDirection = Directions.NORTH;
-                break;
-            case SOUTH:
-                currentDirection = Directions.EAST;
-                break;
-            case WEST:
-                currentDirection = Directions.SOUTH;
-                break;
-            default:
-                break;
+        if (placedOnTable) {
+            switch (currentDirection) {
+                case NORTH:
+                    currentDirection = Directions.WEST;
+                    break;
+                case EAST:
+                    currentDirection = Directions.NORTH;
+                    break;
+                case SOUTH:
+                    currentDirection = Directions.EAST;
+                    break;
+                case WEST:
+                    currentDirection = Directions.SOUTH;
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            ConsoleIO.getInstance().write("Ignoring command! Place the robot on the table before call left!");
         }
+
     }
 
     /**
      * This method turn the robot to right
      */
     public void right() {
-        switch (currentDirection) {
-            case NORTH:
-                currentDirection = Directions.EAST;
-                break;
-            case EAST:
-                currentDirection = Directions.SOUTH;
-                break;
-            case SOUTH:
-                currentDirection = Directions.WEST;
-                break;
-            case WEST:
-                currentDirection = Directions.NORTH;
-                break;
-            default:
-                break;
+        if (placedOnTable) {
+            switch (currentDirection) {
+                case NORTH:
+                    currentDirection = Directions.EAST;
+                    break;
+                case EAST:
+                    currentDirection = Directions.SOUTH;
+                    break;
+                case SOUTH:
+                    currentDirection = Directions.WEST;
+                    break;
+                case WEST:
+                    currentDirection = Directions.NORTH;
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            ConsoleIO.getInstance().write("Ignoring command! Place the robot on the table before call right!");
         }
     }
 
@@ -122,8 +138,12 @@ public class Robot {
      * @return returns a string which includes the current position and the direction of the robot (ex: x, y, NORTH)
      */
     public String report() {
-        StringBuilder stringBuilder = new StringBuilder();
-        return stringBuilder.append(currentCol).append(", ").append(AppConstants.tableRows - 1 - currentRow).append(", ").append(currentDirection).toString();
+        if (placedOnTable) {
+            StringBuilder stringBuilder = new StringBuilder();
+            return stringBuilder.append(currentCol).append(", ").append(AppConstants.tableRows - 1 - currentRow).append(", ").append(currentDirection).toString();
+        } else {
+            return "Ignoring command! Place the robot on the table before call report!";
+        }
     }
 
     /**
