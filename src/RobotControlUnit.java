@@ -11,8 +11,11 @@ public class RobotControlUnit {
     public static void main(String[] args) {
         ConsoleIO.getInstance().write("Gird size: " + AppConstants.tableCols + "x" + AppConstants.tableRows);
         /*initialize a table and a robot*/
-        Table table = new Table(AppConstants.tableRows, AppConstants.tableCols);
+        Table table = new Table(AppConstants.tableRows, AppConstants.tableCols).setObstacles(4, 3).setObstacles(3,3).setObstacles(2,3).setObstacles(1,3);
         Robot robot = new Robot(table);
+
+        robot.place(0, 0, Directions.SOUTH);
+        robot.aStarPathFind(4, 4);
 
         String input = ConsoleIO.getInstance().read();
         String[] processedInput = input.split(" ");
